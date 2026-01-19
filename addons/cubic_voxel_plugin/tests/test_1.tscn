@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://mnlnum56dg6k"]
+[gd_scene load_steps=26 format=3 uid="uid://mnlnum56dg6k"]
 
 [ext_resource type="Script" uid="uid://2suxv6s4pknj" path="res://addons/cubic_voxel_plugin/tests/free_camera.gd" id="1_cja3g"]
 [ext_resource type="Script" uid="uid://b5kuqdkkdht5k" path="res://addons/cubic_voxel_plugin/nodes/cubic_voxel_terrain_generator.gd" id="2_ae2ew"]
@@ -74,6 +74,14 @@ matrial = SubResource("StandardMaterial3D_8fvll")
 is_transparent = true
 metadata/_custom_type_script = "uid://cvy370o6wgfs5"
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pm1lt"]
+
+[sub_resource type="Resource" id="Resource_v1r3k"]
+script = ExtResource("3_5h42e")
+matrial = SubResource("StandardMaterial3D_pm1lt")
+is_mult_directional = true
+metadata/_custom_type_script = "uid://cvy370o6wgfs5"
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_s5ln1"]
 
 [node name="Test1" type="Node3D"]
@@ -110,7 +118,7 @@ script = ExtResource("1_cja3g")
 
 [node name="CubicVoxelTerrainGenerator" type="Node" parent="." node_paths=PackedStringArray("collision_shape_target")]
 script = ExtResource("2_ae2ew")
-blocks_infos = Array[ExtResource("3_5h42e")]([SubResource("Resource_s5ln1"), SubResource("Resource_3i4m8"), SubResource("Resource_8fvll"), SubResource("Resource_1f0eg"), SubResource("Resource_axv0p"), SubResource("Resource_pm1lt")])
+blocks_infos = Array[ExtResource("3_5h42e")]([SubResource("Resource_s5ln1"), SubResource("Resource_3i4m8"), SubResource("Resource_8fvll"), SubResource("Resource_1f0eg"), SubResource("Resource_axv0p"), SubResource("Resource_pm1lt"), SubResource("Resource_v1r3k")])
 collision_shape_target = NodePath("StaticBody3D/CollisionShape3D")
 metadata/_custom_type_script = "uid://b5kuqdkkdht5k"
 

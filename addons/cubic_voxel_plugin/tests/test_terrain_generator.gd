@@ -35,6 +35,17 @@ func test() -> void:
 			for y : int in range(2,4):
 				p.cube_map_set(Vector3i(x,y,5),BlockEstate.new(5))
 		
+		var directions : Array[BlockEstate.Directions] = [
+			BlockEstate.Directions.UP,
+			BlockEstate.Directions.DOWN,
+			BlockEstate.Directions.LEFT,
+			BlockEstate.Directions.RIGHT,
+			BlockEstate.Directions.FOWARD,
+			BlockEstate.Directions.BACK
+			]
+		for i : int in range(0,directions.size()):
+			p.cube_map_set(Vector3i(i * 2,2,0),BlockEstate.new(6,directions[i]))
+		
 		p.generate_mesh()
 
 func _ready() -> void:

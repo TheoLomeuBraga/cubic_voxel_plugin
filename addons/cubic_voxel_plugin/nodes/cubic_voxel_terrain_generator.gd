@@ -98,16 +98,28 @@ func should_generate_wall_between(pos_a : Vector3i,pos_b : Vector3i) -> bool:
 	
 	return false
 
-func adjust_uv(uv:Vector2,plane_normal : Vector3i,block_direction : BlockEstate.Directions = BlockEstate.Directions.UP) -> Vector2:
-	return uv
+func rotate_uv( uv : Vector2, rotation : float) -> Vector2:
+	var mid : float = 0.5
+	return Vector2(
+		cos(rotation) * (uv.x - mid) + sin(rotation) * (uv.y - mid) + mid,
+		cos(rotation) * (uv.y - mid) - sin(rotation) * (uv.x - mid) + mid)
+	
 
-func generate_mesh_to(st : SurfaceTool,block : Vector3i) -> void:
+func adjust_uv(uv:Vector2,plane_normal : Vector3i,is_mult_directional : bool = false,block_direction : BlockEstate.Directions = BlockEstate.Directions.UP) -> Vector2:
+	var new_uv : Vector2 = uv
+	
+	#new_uv = rotate_uv(new_uv,PI/2)
+	
+	return new_uv
+
+func generate_mesh_to(st : SurfaceTool,block : Vector3i) -> void: # TOREDO
 	
 	if should_generate_wall_between(block,block+Vector3i.UP):
 		for v : Vector3 in plane_up:
 			st.set_normal(Vector3.UP)
 			var vp : Vector3 = Vector3(v.x + block.x, v.y + block.y, v.z + block.z)
 			var uv : Vector2 = Vector2(vp.x,vp.z) - Vector2(.5,.5)
+			uv = adjust_uv(uv,Vector3.UP,blocks_infos[cube_map_get(block).id].is_mult_directional,cube_map_get(block).direction)
 			st.set_uv(uv)
 			st.add_vertex(vp)
 	
@@ -116,6 +128,7 @@ func generate_mesh_to(st : SurfaceTool,block : Vector3i) -> void:
 			st.set_normal(Vector3.DOWN)
 			var vp : Vector3 = Vector3(v.x + block.x, v.y + block.y, v.z + block.z)
 			var uv : Vector2 = Vector2(vp.x,vp.z) - Vector2(.5,.5)
+			uv = adjust_uv(uv,Vector3.DOWN,blocks_infos[cube_map_get(block).id].is_mult_directional,cube_map_get(block).direction)
 			st.set_uv(uv)
 			st.add_vertex(vp)
 	
@@ -124,6 +137,7 @@ func generate_mesh_to(st : SurfaceTool,block : Vector3i) -> void:
 			st.set_normal(Vector3.FORWARD)
 			var vp : Vector3 = Vector3(v.x + block.x, v.y + block.y, v.z + block.z)
 			var uv : Vector2 = Vector2(vp.x,-vp.y) - Vector2(.5,.5)
+			uv = adjust_uv(uv,Vector3.FORWARD,blocks_infos[cube_map_get(block).id].is_mult_directional,cube_map_get(block).direction)
 			st.set_uv(uv)
 			st.add_vertex(vp)
 	
@@ -132,6 +146,7 @@ func generate_mesh_to(st : SurfaceTool,block : Vector3i) -> void:
 			st.set_normal(Vector3.BACK)
 			var vp : Vector3 = Vector3(v.x + block.x, v.y + block.y, v.z + block.z)
 			var uv : Vector2 = Vector2(vp.x,-vp.y) - Vector2(.5,.5)
+			uv = adjust_uv(uv,Vector3.BACK,blocks_infos[cube_map_get(block).id].is_mult_directional,cube_map_get(block).direction)
 			st.set_uv(uv)
 			st.add_vertex(vp)
 	
@@ -140,6 +155,7 @@ func generate_mesh_to(st : SurfaceTool,block : Vector3i) -> void:
 			st.set_normal(Vector3.LEFT)
 			var vp : Vector3 = Vector3(v.x + block.x, v.y + block.y, v.z + block.z)
 			var uv : Vector2 = Vector2(vp.z,-vp.y) - Vector2(.5,.5)
+			uv = adjust_uv(uv,Vector3.LEFT,blocks_infos[cube_map_get(block).id].is_mult_directional,cube_map_get(block).direction)
 			st.set_uv(uv)
 			st.add_vertex(vp)
 	
@@ -148,6 +164,7 @@ func generate_mesh_to(st : SurfaceTool,block : Vector3i) -> void:
 			st.set_normal(Vector3.RIGHT)
 			var vp : Vector3 = Vector3(v.x + block.x, v.y + block.y, v.z + block.z)
 			var uv : Vector2 = Vector2(vp.z,-vp.y) - Vector2(.5,.5)
+			uv = adjust_uv(uv,Vector3.RIGHT,blocks_infos[cube_map_get(block).id].is_mult_directional,cube_map_get(block).direction)
 			st.set_uv(uv)
 			st.add_vertex(vp)
 
